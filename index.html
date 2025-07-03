@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currency Converter Pro</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.png" type="image/png">
+  <meta name="theme-color" content="#3b82f6">
+</head>
+<body id="body" class="bg-blue-50 text-black flex items-center justify-center min-h-screen transition duration-300 relative">
+
+  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md dark:bg-gray-900 dark:text-white">
+    <h1 class="text-2xl font-bold text-center mb-4 text-blue-600 dark:text-white">Currency Converter</h1>
+
+    <div class="text-right mb-4">
+      <button onclick="toggleDarkMode()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm">Toggle Dark Mode</button>
+    </div>
+
+    <div class="mb-4">
+      <label class="block mb-1 font-medium">Amount</label>
+      <input type="number" id="amount" class="w-full border border-gray-300 rounded px-4 py-2 text-black" placeholder="Enter amount">
+    </div>
+
+    <div class="flex space-x-4 mb-4">
+      <div class="flex-1">
+        <label class="block mb-1 font-medium">From</label>
+        <input type="text" id="fromSearch" placeholder="Search..." oninput="filterOptions('fromSearch', 'fromCurrency')" class="mb-2 w-full px-3 py-2 border border-gray-300 rounded text-black" />
+        <select id="fromCurrency" class="w-full border border-gray-300 rounded px-4 py-2 text-black">
+          <option value="USD">🇺🇸 USD</option>
+          <option value="EUR">🇪🇺 EUR</option>
+          <option value="GBP">🇬🇧 GBP</option>
+          <option value="NGN">🇳🇬 NGN</option>
+          <option value="LRD">🇱🇷 LRD</option>
+        </select>
+      </div>
+      <div class="flex-1">
+        <label class="block mb-1 font-medium">To</label>
+        <input type="text" id="toSearch" placeholder="Search..." oninput="filterOptions('toSearch', 'toCurrency')" class="mb-2 w-full px-3 py-2 border border-gray-300 rounded text-black" />
+        <select id="toCurrency" class="w-full border border-gray-300 rounded px-4 py-2 text-black">
+          <option value="USD">🇺🇸 USD</option>
+          <option value="EUR">🇪🇺 EUR</option>
+          <option value="GBP">🇬🇧 GBP</option>
+          <option value="NGN">🇳🇬 NGN</option>
+          <option value="LRD">🇱🇷 LRD</option>
+        </select>
+      </div>
+    </div>
+
+    <button onclick="swapCurrencies()" class="text-sm text-blue-500 underline mb-4">Swap</button>
+
+    <button onclick="convertCurrency()" class="bg-blue-600 hover:bg-blue-700 text-white w-full py-2 rounded font-semibold mb-4">
+      Convert
+    </button>
+
+    <div id="result" class="text-center text-xl font-bold text-green-600 dark:text-green-400 mb-4"></div>
+
+    <div>
+      <h2 class="text-lg font-semibold mb-2">Recent Conversions</h2>
+      <ul id="history" class="text-sm list-disc list-inside space-y-1"></ul>
+    </div>
+
+    <div class="mt-6">
+      <h2 class="text-lg font-semibold mb-2">Rate Trend (Past 7 Days)</h2>
+      <canvas id="rateChart" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+        console.log("Service Worker registered with scope:", registration.scope);
+      }).catch(function(error) {
+        console.error("Service Worker registration failed:", error);
+      });
+    }
+  </script>
+</body>
+</html>
